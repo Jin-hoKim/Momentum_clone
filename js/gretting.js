@@ -9,12 +9,33 @@ const greetingMessage = {"morning":"Good morning",
 const USER_NAME = "currentUser";
 const SHOWING_ON = "showing";
 
+function saveName(txt)
+{
+  localStorage.setItem(USER_NAME, txt);
+}
+
+function handlerSubmit(event)
+{
+  event.preventDefault();
+
+  const currentValue = input.value;
+  paintGreeting(currentValue);
+  saveName(currentValue);
+}
+
+function askForName()
+{
+  form.classList.add(SHOWING_ON);
+  form.addEventListener("submit", handlerSubmit);
+}
+
 function paintGreeting(txt)
 {
   form.classList.remove(SHOWING_ON);
-
-  greeting.innerText = `Hello, ${txt}!`;
   greeting.classList.add(SHOWING_ON);
+
+  currentUser = txt;
+  greeting.innerText = `Hello, ${currentUser}!`;
 }
 
 function loadName()
@@ -26,8 +47,7 @@ function loadName()
   }
   else
   {
-    greeting.classList.remove(SHOWING_ON);
-    form.classList.add(SHOWING_ON);
+    askForName();
   }
 }
 
